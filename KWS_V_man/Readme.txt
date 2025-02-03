@@ -1,0 +1,1 @@
+keyword spotting (KWS) system is trained using "KWS_denseNet_man.py" located in the current directory. User can change the model in line No. 192. In our model we use the number of epoch 50. List of keywords can also be changed in Line No. 197.

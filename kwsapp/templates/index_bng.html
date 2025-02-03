@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" type="text/css" href="static/style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      position: relative;
+      height: 200px;
+      /* Adjust the height as needed */
+      background: rgba(0, 0, 0, 0.9) url("https://lh6.googleusercontent.com/Vix7bvA3GfhsTA7qWvsIFt1JQ5fBQcD6svmWxIV5MdAXCmUHh5r9d4tWQnr2XK8_In_G_Qe2Cr2gwImD04fMrdI=w16383") center/cover no-repeat;
+      /* Increase opacity to 0.5 (adjust as needed) */
+      text-align: left;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: left;
+      padding-left: 200px;
+      /* Add padding for better visibility */
+    }
+
+
+    h1 {
+      font-size: 36px;
+      margin: 0;
+    }
+
+    h5 {
+      font-size: 18px;
+      margin: 0;
+      padding-top: 10px;
+      /* Add padding for better spacing */
+    }
+
+    h4 {
+      font-size: 28px;
+      margin: 0;
+      padding-top: 10px;
+      /* Add padding for better spacing */
+    }
+
+    h3 {
+      font-size: 24px;
+      margin: 0;
+      text-align: left;
+      padding-top: 50px;
+      /* Add padding for better spacing */
+    }
+
+    .logos {
+      display: flex;
+      justify-content: left;
+      padding: 20px;
+      background-color: white;
+      /* Adjust the background color as needed */
+    }
+
+    .logo {
+      max-height: 150px;
+      max-width: 150px;
+      min-height: 150px;
+      min-width: 150px;
+      background-color: white;
+      /* Add styling for your logos, e.g., border-radius, margin, padding, etc. */
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: left;
+      margin-top: 20px;
+      padding-left: 50px;
+    }
+
+    .kwsBlock {
+      justify-content: left;
+      margin-left: 200px;
+      padding-left: 50px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 15px 20px;
+      /* Adjust padding as needed */
+      margin: 0 10px;
+      font-size: 28px;
+      /* Adjust font size as needed */
+      background-color: #0652c3;
+      /* Light blue color */
+      color: white;
+      border: none;
+      border-radius: 10px;
+      max-width: 200px;
+      /* Rounded corners */
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+
+
+<header>
+  <h1>Speech Technologies for North Eastern Languages </h1>
+  <h5>under the project</h5>
+  <h4> Speech Technologies in Indian Languages of NLTM</h4>
+</header>
+
+<div class="logos">
+  <div class="logo"><img class="logo" src="static/IITG_logo.png" alt="Logo 1"></div>
+  <div class="logo"><img class="logo" src="static/2.jpg" alt="Logo 1"></div>
+  <div class="logo"><img class="logo" src="static/man.png" alt="Logo 1"></div>
+  <div class="logo"><img class="logo" src="static/IIITSriCity.png" alt="Logo 1"></div>
+</div>
+<div class="buttons">
+  <button onclick="window.location.href='.'">Back</button>
+</div>
+<div id="kwsBlock" style="padding-left: 50px;">
+  <h3> Bengali KWS</h3>
+
+  <p>Click to start record </p>
+  <div id="controls">
+    <button id="recordButton">Record</button>
+    <button id="pauseButton" disabled>Pause</button>
+    <button id="stopButton" disabled>Stop</button>
+  </div>
+
+  <h3>Result: </h3>
+  <h2 style="color: rgb(20, 152, 84);" id="status"> </h2>
+  <h2 style="color: rgb(20, 152, 84);" id="result"> </h2>
+  <h2 style="color:  rgb(20, 152, 84);" id="conf"> </h2>
+  <div id="formats"> </div>
+  <p><strong>Recordings:</strong></p>
+  <ol id="recordingsList"></ol>
+
+  <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+  <script src="static/js/recorder.js"></script>
+  <script src="static/js/app_bng.js"></script>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href="{% static 'img/recording.gif' %}" />
+    <title>Online Recorder</title>
+
+
+    <style>
+        body {
+            background-color: #FAEBD7;
+            /* For WebKit (Safari, Chrome, etc) */
+            background: #FAEBD7 -webkit-gradient(linear, left top, left bottom, from(#FAEBD7), to(#FAEBD7)) no-repeat;
+            /* Mozilla,Firefox/Gecko */
+            background: #FAEBD7 -moz-linear-gradient(top, #FAEBD7, #FAEBD7) no-repeat;
+            /* IE 5.5 - 7 */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FAEBD7, endColorstr=#FAEBD7) no-repeat;
+            /* IE 8 */
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#D97147, endColorstr=#D97147)" no-repeat;
+        }
+    </style>
+</head>
+
+<body id="index" onload="">
+
+    <script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'mp3recorder.js' %}"></script>
+    <script type="text/javascript">
+        var audio_context;
+
+        function __log(e, data) {
+            log.innerHTML += "\n" + e + " " + (data || '');
+        }
+
+        $(function () {
+
+            try {
+                // webkit shim
+                window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                navigator.getUserMedia = (navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia ||
+                    navigator.msGetUserMedia);
+                window.URL = window.URL || window.webkitURL;
+
+                var audio_context = new AudioContext;
+                // __log('Audio context set up.');
+                // __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not  present!'));
+            } catch (e) {
+                alert('No web audio support in this browser!');
+            }
+
+            $('.recorder .start').on('click', function () {
+
+                //document.getElementById("tem").style.display = 'block';
+                $this = $(this);
+                $recorder = $this.parent();
+
+                navigator.getUserMedia({ audio: true }, function (stream) {
+                    var recorderObject = new MP3Recorder(audio_context, stream, { statusContainer: $recorder.find('.status1'), statusMethod: 'replace' });
+                    $recorder.data('recorderObject', recorderObject);
+
+                    recorderObject.start();
+                    document.getElementById("temp").style.display = 'none';
+                    document.getElementById("record_button").style.display = 'none';
+                    document.getElementById("record_text").style.display = 'none';
+                    document.getElementById("stop_button").style.display = 'block';
+                    document.getElementById("stop_text").style.display = 'block';
+
+
+                }, function (e) { });
+            });
+
+            //Re_Recorder
+
+            $('.rerecorder .start').on('click', function () {
+
+                document.location.reload()
+                //document.getElementById("tem").style.display = 'block';
+                $this = $(this);
+                $recorder = $this.parent();
+
+                navigator.getUserMedia({ audio: true }, function (stream) {
+                    var recorderObject = new MP3Recorder(audio_context, stream, { statusContainer: $recorder.find('.status1'), statusMethod: 'replace' });
+                    $recorder.data('recorderObject', recorderObject);
+
+                    recorderObject.start();
+                    document.getElementById("re_record_button").style.display = 'none';
+                    document.getElementById("upload_button").style.display = 'none';
+                    document.getElementById("stop_button").style.display = 'block';
+
+
+                }, function (e) { });
+            });
+
+            /*$('.recorder .stop').on('click', function() {
+              //document.getElementById("tem").style.display = 'none';
+              document.getElementById("temp1").style.display = 'none';
+              document.getElementById("temp2").style.display = 'none';
+              document.getElementById("stop_button").style.display = 'none';
+              document.getElementById("stop_text").style.display = 'none';
+          
+               document.getElementById("saving").style.display = 'block';
+                document.getElementById("saving_text").style.display = 'block';
+          document.getElementById('playerContainer').style.display = 'none';
+            
+              //DELAY TIME
+              var delayInMilliseconds = 1000; //1 second
+          
+              setTimeout(function() {
+              document.getElementById("saving").style.display = 'none';
+                document.getElementById("saving_text").style.display = 'none';
+              document.getElementById("saving").style.display = 'none';
+                document.getElementById("saving_text").style.display = 'none';
+          
+               document.getElementById('temp').style.display = 'block';
+               document.getElementById('temp1').style.display = 'block';
+               document.getElementById('temp2').style.display = 'block';   
+              document.getElementById('playerContainer').style.display = 'block';
+              document.getElementById("re_record_button").style.display = 'inline-block';
+              document.getElementById("upload_button").style.display = 'inline-block';
+              
+              }, delayInMilliseconds);
+          
+              
+              $this = $(this);
+              $recorder = $this.parent();
+          
+              recorderObject = $recorder.data('recorderObject');
+              recorderObject.stop();
+          
+              recorderObject.exportWAV(function(base64_wav_data) {
+                var url = 'data:audio/wav;base64,' + base64_wav_data;
+                var au  = document.createElement('audio');
+          
+                document.getElementById("playerContainer").innerHTML = "";
+                //console.log(url)
+          
+                var duc = document.getElementById("dataUrlcontainer");
+                duc.innerHTML = url;
+          
+                au.controls = true;
+                au.src = url;
+                //$recorder.append(au);
+                $('#playerContainer').append(au);
+          
+                recorderObject.logStatus('');
+              });
+          
+            });
+          
+            });*/
+
+            $('.recorder .stop').on('click', function () {
+                //document.getElementById("tem").style.display = 'none';
+                document.getElementById("temp1").style.display = 'none';
+                document.getElementById("temp2").style.display = 'none';
+                document.getElementById("stop_button").style.display = 'none';
+                document.getElementById("stop_text").style.display = 'none';
+
+                document.getElementById("saving").style.display = 'block';
+                document.getElementById("saving_text").style.display = 'block';
+                document.getElementById('playerContainer').style.display = 'none';
+
+                //DELAY TIME
+                var delayInMilliseconds = 1000; //1 second
+
+                setTimeout(function () {
+                    document.getElementById("saving").style.display = 'none';
+                    document.getElementById("saving_text").style.display = 'none';
+                    document.getElementById("saving").style.display = 'none';
+                    document.getElementById("saving_text").style.display = 'none';
+
+                    /*document.getElementById('temp').style.display = 'block';
+                    document.getElementById('temp1').style.display = 'block';
+                    document.getElementById('temp2').style.display = 'block';   
+                   document.getElementById('playerContainer').style.display = 'block';
+                   document.getElementById("re_record_button").style.display = 'inline-block';
+                   document.getElementById("upload_button").style.display = 'inline-block';*/
+
+                }, delayInMilliseconds);
+
+
+                $this = $(this);
+                $recorder = $this.parent();
+
+                recorderObject = $recorder.data('recorderObject');
+                recorderObject.stop();
+
+                recorderObject.exportWAV(function (base64_wav_data) {
+                    var url = 'data:audio/wav;base64,' + base64_wav_data;
+                    var au = document.createElement('audio');
+
+                    document.getElementById("playerContainer").innerHTML = "";
+                    //console.log(url)
+
+                    var duc = document.getElementById("dataUrlcontainer");
+                    duc.innerHTML = url;
+
+                    au.controls = true;
+                    au.src = url;
+                    //$recorder.append(au);
+                    $('#playerContainer').append(au);
+
+                    recorderObject.logStatus('');
+
+                    //exp
+                    var dataURL = document.getElementById("dataUrlcontainer").innerHTML;
+                    document.getElementById('temp').style.display = 'none';
+                    document.getElementById('temp1').style.display = 'none';
+                    document.getElementById('temp2').style.display = 'none';
+                    document.getElementById('temp3').style.display = 'none';
+                    document.getElementById('temp4').style.display = 'none';
+                    document.getElementById('playerContainer').style.display = 'none';
+                    document.getElementById("re_record_button").style.display = 'none';
+                    document.getElementById("upload_button").style.display = 'none';
+                    //document.getElementById("saved").style.display = 'block';
+                    //document.getElementById("saved_text").style.display = 'block';
+                    $.ajax({
+                        type: "POST",
+                        url: "https://20.210.207.21:8000/process_audio/",
+                        data: {
+                            wavBase64: dataURL
+                        }
+                    }).done(function (o) {
+                        console.log(o);
+                        //window.location = "https://20.210.207.21:8000/process_audio/";
+                        //window.location="http://172.16.92.8/audio_pri/uploadWav1.php";
+                    });
+                    /* window.setTimeout(function(){
+                        //window.location="http://172.16.92.8/audio_pri/uploadWav1.php";
+                         window.location="https://www.iitg.ernet.in/priyankoo/audio/uploadWav1.php";
+                         }, 3000);*/
+
+                });
+
+            });
+
+        });
+    </script>
+
+
+    <script>
+        function upload() {
+
+            var dataURL = document.getElementById("dataUrlcontainer").innerHTML;
+            document.getElementById('temp').style.display = 'none';
+            document.getElementById('temp1').style.display = 'none';
+            document.getElementById('temp2').style.display = 'none';
+            document.getElementById('temp3').style.display = 'none';
+            document.getElementById('temp4').style.display = 'none';
+            document.getElementById('playerContainer').style.display = 'none';
+            document.getElementById("re_record_button").style.display = 'none';
+            document.getElementById("upload_button").style.display = 'none';
+            document.getElementById("saved").style.display = 'block';
+            document.getElementById("saved_text").style.display = 'block';
+            $.ajax({
+                type: "POST",
+                url: "process_audio/",
+                data: {
+                    wavBase64: dataURL
+                }
+            }).done(function (o) {
+                console.log('saved');
+                //window.location = "uploadWav1.php";
+            });
+            /* window.setTimeout(function(){
+                window.location="http://172.16.92.8/audio_pri/uploadWav1.php";
+                 //window.location="https://www.iitg.ernet.in/priyankoo/audio/uploadWav1.php";
+                 }, 3000);*/
+
+
+        }  
+    </script>
+    <img src="{% static 'img/logo.png' %}" height="120" />
+    <div id="temp4">
+
+    </div>
+    <div id="temp">
+        <br><br>
+    </div>
+    <div id="temp1">
+        <br><br><br>
+    </div>
+    <div id="temp2">
+        <br><br>
+    </div>
+    <div id="temp3">
+        <br>
+    </div>
+    <center>
+        <font color="maroon" style="display: none;" size="12" face="arial">Text</font><br>
+        <div class="recorder">
+            <center>
+                <!--<input type="button" class="start"  value="Record" id="record_button"/>-->
+                <img src="{% static 'img/recording.gif' %}" height="120" width="120" class="start"
+                    id="record_button" /><br><br>
+                <font color="maroon" id="record_text" size="12" face="Arial">Click on the mic to record</font>
+                <!--<input type="button" class="stop" value="Stop" style="display: none;" id="stop_button"/>-->
+                <img src="{% static 'img/stop_recording.gif' %}" height="120" width="120" class="stop" id="stop_button"
+                    style="display: none;" /><br><br>
+                <font color="maroon" id="stop_text" style="display: none;" size="12" face="arial">Recording. Click mic
+                    to stop.<br>
+                    <span style="font-size:0.4em">Say district names in Mizoram, such as "Aizawl, Mamit" etc. or say
+                        vegetable names such as 'hmarcha ro" etc.</span>
+                </font><br>
+                <pre class="status"></pre>
+        </div>
+        <center>
+            <img src="{% static 'img/processing.gif' %}" height="180" width="180" id="saving" style="display: none;" />
+            <font color="maroon" id="saving_text" style="display: none;" size="12" face="arial">Processing</font>
+        </center>
+        <center><img id="tem" src="{% static 'img/record.gif' %}" height="200" width="300" style="display: none;">
+        </center>
+
+        <center>
+            <div id="playerContainer"></div>
+        </center><br>
+        <center>
+            <div class="rerecorder">
+                <button onclick="upload()" id="upload_button"
+                    style="display: none;background-color: #4CAF50;border: none;color: white;padding: 15px 32px;text-align:center;text-decoration: none;font-size: 16px;">Confirm</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                <font color="white" style="display :none;">abajs</font><input type="button" class="start"
+                    value="Rerecord" id="re_record_button"
+                    style="display: none;background-color: #f44336;border: none;color: white;padding: 15px 32px;text-align:center;text-decoration: none;font-size: 16px;" />
+                <img src="{% static 'img/saved.png' %}" height="320" width="320" id="saved" style="display: none;" />
+                <font color="maroon" id="saved_text" style="display: none;" size="12" face="arial">Saved</font>
+        </center>
+        </div>
+
+        <div id="dataUrlcontainer" hidden></div>
+
+        <pre id="log"></pre>
+
+</body>
+
+</html>

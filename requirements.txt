@@ -1,0 +1,5 @@
+flask
+django
+flask_cors
+io
+pydub

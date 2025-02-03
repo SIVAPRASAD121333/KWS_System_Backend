@@ -1,3 +1,8 @@
+# Main Commands
+cd KWS_System_Backend
+pip install -r requirements.txt
+python my_app.py
+
 # Introduction
 
 This is a keyword spotting (KWS) system for three different languages, i.e., Bengali, Manipuri, and Mizo. A GUI is also developed for this system. After the installation of all the requirements, user can simply run the server (by using the command given below), and then by using a specific [link](https://localhost:8000/) (mentioned below in the Readme file) in the web browser user can use this KWS system.

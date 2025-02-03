@@ -1,6 +1,9 @@
 # Main Commands
+
 cd KWS_System_Backend
+
 pip install -r requirements.txt
+
 python my_app.py
 
 # Introduction
